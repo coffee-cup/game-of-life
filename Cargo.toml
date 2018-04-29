@@ -1,0 +1,10 @@
+[package]
+name = "game-of-life"
+version = "0.1.0"
+authors = ["Jake Runzer <jakerunzer@gmail.com>"]
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]

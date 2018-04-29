@@ -1,0 +1,62 @@
+@import 'queries';
+@import 'variables';
+@import 'fonts';
+
+// :)
+* {
+  box-sizing: border-box;
+}
+
+// Text Selection Colour
+::selection {
+  background: $selection;
+  /* WebKit/Blink Browsers */
+}
+
+::-moz-selection {
+  background: $selection;
+  /* Gecko Browsers */
+}
+
+html,
+body {
+  width  : 100vw;
+  margin : 0;
+  padding: 0;
+}
+
+body {
+  overflow-x      : hidden;
+  color           : $text-dark;
+  background-color: $background-colour;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing : antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  font-size  : $base-font-size;
+  line-height: $base-line-height;
+}
+
+a, a:visited {
+  cursor         : pointer;
+  transition     : 0.25s ease-in-out all;
+  text-decoration: none;
+  color          : $purple;
+  &:hover {
+    // opacity: 0.5;
+    color: $secondary-colour;
+  }
+}
+
+a.none {
+  text-decoration: none;
+  background     : none;
+  text-shadow    : none;
+}
+
+ul.none {
+  padding-left   : 0;
+  list-style-type: none;
+}
