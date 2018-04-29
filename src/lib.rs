@@ -5,6 +5,12 @@ extern crate wasm_bindgen;
 use std::fmt;
 use wasm_bindgen::prelude::*;
 
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = Math)]
+    fn random() -> f64;
+}
+
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Cell {
@@ -45,8 +51,8 @@ impl Universe {
         let height = 64;
 
         let cells = (0..width * height)
-            .map(|i| {
-                if i % 2 == 0 || i % 7 == 0 {
+            .map(|_i| {
+                if random() < 0.5 {
                     Cell::Alive
                 } else {
                     Cell::Dead
