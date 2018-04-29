@@ -12,6 +12,9 @@ extern "C" {
 
     #[wasm_bindgen(js_namespace = Math)]
     fn random() -> f64;
+
+    #[wasm_bindgen(js_namespace = performance)]
+    fn now() -> f64;
 }
 
 #[repr(u8)]
