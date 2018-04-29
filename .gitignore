@@ -171,9 +171,5 @@ Cargo.lock
 # End of https://www.gitignore.io/api/node,rust,macos,emacs
 
 build/
+wasm/
 .tern-port
-
-# Wasm tmps
-game_of_life.d.ts
-game_of_life.js
-game_of_life_bg.wasm

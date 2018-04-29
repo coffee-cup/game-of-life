@@ -14,10 +14,10 @@
     "compile-release":
       "cargo +nightly build --release --target wasm32-unknown-unknown",
     "wasm-debug":
-      "wasm-bindgen target/wasm32-unknown-unknown/debug/game_of_life.wasm --out-dir .",
+      "mkdir -p wasm && wasm-bindgen target/wasm32-unknown-unknown/debug/game_of_life.wasm --out-dir wasm",
     "wasm-release":
-      "wasm-bindgen target/wasm32-unknown-unknown/release/game_of_life.wasm --out-dir .",
-    "heroku-postbuild": "yarn run ",
+      "mkdir -p wasm && wasm-bindgen target/wasm32-unknown-unknown/release/game_of_life.wasm --out-dir wasm",
+    "deploy": "yarn run build && surge -p build/ -d https://game-of-life-wasm.surge.sh",
     "test": "echo \"Not implemented\""
   },
   "engines": {

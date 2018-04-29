@@ -1,5 +1,5 @@
-import { Universe } from '../game_of_life';
-import { memory } from '../game_of_life_bg';
+import { Universe } from '../wasm/game_of_life';
+import { memory } from '../wasm/game_of_life_bg';
 
 const GRID_COLOUR = '#CCCCCC';
 const DEAD_COLOUR = '#FFFFFF';
