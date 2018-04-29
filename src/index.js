@@ -67,7 +67,7 @@ const fps = new class {
     let sum = 0;
     for (let i = 0; i < this.frames.length; i += 1) {
       sum += this.frames[i];
-      min = Math.min(this.rames[i], min);
+      min = Math.min(this.frames[i], min);
       max = Math.max(this.frames[i], max);
     }
     let mean = sum / this.frames.length;
