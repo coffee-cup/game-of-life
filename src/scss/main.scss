@@ -60,3 +60,11 @@ ul.none {
   padding-left   : 0;
   list-style-type: none;
 }
+
+main {
+  min-height: 100vh;
+}
+
+.canvas-container {
+  flex-grow: 1;
+}
