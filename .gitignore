@@ -172,3 +172,8 @@ Cargo.lock
 
 build/
 .tern-port
+
+# Wasm tmps
+game_of_life.d.ts
+game_of_life.js
+game_of_life_bg.wasm

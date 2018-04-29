@@ -7,14 +7,15 @@ const path = require('path');
 const isProd = process.env.NODE_ENV === 'production';
 console.log(isProd ? 'Building for production' : 'Building for development');
 
+const envVars = ['NODE_ENV'];
+
 const config = {
-  entry: ['./src/bootstrap.js'],
+  entry: ['./src/index.js'],
   output: {
     path: path.join(__dirname, '/build'),
     filename: 'app.js',
     publicPath: '/'
   },
-  mode: process.env.NODE_ENV,
   devServer: {
     inline: true,
     hot: true,
@@ -24,6 +25,33 @@ const config = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        loaders: ['eslint-loader'],
+        exclude: [/node_modules/]
+      },
+      {
+        test: /\.js$/,
+        loaders: ['babel-loader'],
+        exclude: [/node_modules/]
+      },
+      {
+        test: /\.rs$/,
+        use: [
+          {
+            loader: 'wasm-loader'
+          },
+          {
+            loader: 'rust-native-wasm-loader',
+            options: {
+              gc: true,
+              release: true,
+              target: 'wasm32-unknown-unknown'
+            }
+          }
+        ]
+      },
       {
         test: /\.(css|scss)$/,
         loader: ExtractTextPlugin.extract({
