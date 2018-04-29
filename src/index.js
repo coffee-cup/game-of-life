@@ -105,20 +105,28 @@ const drawCells = () => {
 
   ctx.beginPath();
 
-  for (let row = 0; row < height; row += 1) {
-    for (let col = 0; col < width; col += 1) {
-      const idx = getIndex(row, col);
+  const drawWithFill = (fillColour, state) => {
+    ctx.fillStyle = fillColour;
+    for (let row = 0; row < height; row += 1) {
+      for (let col = 0; col < width; col += 1) {
+        const idx = getIndex(row, col);
 
-      ctx.fillStyle = cells[idx] === DEAD ? DEAD_COLOUR : ALIVE_COLOUR;
+        if (cells[idx] !== state) {
+          continue;
+        }
 
-      ctx.fillRect(
-        col * (cellSize + 1) + 1,
-        row * (cellSize + 1) + 1,
-        cellSize,
-        cellSize
-      );
+        ctx.fillRect(
+          col * (cellSize + 1) + 1,
+          row * (cellSize + 1) + 1,
+          cellSize,
+          cellSize
+        );
+      }
     }
-  }
+  };
+
+  drawWithFill(ALIVE_COLOUR, ALIVE);
+  drawWithFill(DEAD_COLOUR, DEAD);
 
   ctx.stroke();
 };
