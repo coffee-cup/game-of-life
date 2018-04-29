@@ -1,3 +1,12 @@
-import { greet } from '../game_of_life';
+import { Universe } from '../game_of_life';
 
-greet('Rust and Webassembly');
+const pre = document.getElementById('game-of-life-canvas');
+const universe = Universe.new();
+
+const renderLoop = () => {
+  pre.textContent = universe.render();
+  universe.tick();
+
+  requestAnimationFrame(renderLoop);
+};
+requestAnimationFrame(renderLoop);
