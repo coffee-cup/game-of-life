@@ -68,3 +68,11 @@ main {
 .canvas-container {
   flex-grow: 1;
 }
+
+button {
+    width: 6rem;
+    height: 2rem;
+    background-color: white;
+    border: solid 2px $darkgray;
+    font-weight: bold;
+}

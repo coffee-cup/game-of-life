@@ -7,6 +7,9 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(msg: &str);
+
     #[wasm_bindgen(js_namespace = Math)]
     fn random() -> f64;
 }
@@ -16,6 +19,15 @@ extern "C" {
 pub enum Cell {
     Dead = 0,
     Alive = 1,
+}
+
+impl Cell {
+    fn toggle(&mut self) {
+        *self = match *self {
+            Cell::Dead => Cell::Alive,
+            Cell::Alive => Cell::Dead,
+        }
+    }
 }
 
 #[wasm_bindgen]
@@ -50,8 +62,31 @@ impl Universe {
         let width = 64;
         let height = 64;
 
-        let cells = (0..width * height)
-            .map(|_i| {
+        let cells = (0..width * height).map(|_i| Cell::Dead).collect();
+
+        let mut universe = Universe {
+            width,
+            height,
+            cells,
+        };
+
+        universe.randomize();
+        universe
+    }
+
+    pub fn clear(&mut self) {
+        self.cells = self.cells
+            .clone()
+            .into_iter()
+            .map(|_x| Cell::Dead)
+            .collect();
+    }
+
+    pub fn randomize(&mut self) {
+        self.cells = self.cells
+            .clone()
+            .into_iter()
+            .map(|_x| {
                 if random() < 0.5 {
                     Cell::Alive
                 } else {
@@ -59,12 +94,6 @@ impl Universe {
                 }
             })
             .collect();
-
-        Universe {
-            width,
-            height,
-            cells,
-        }
     }
 
     pub fn render(&self) -> String {
@@ -114,6 +143,11 @@ impl Universe {
         }
 
         self.cells = next;
+    }
+
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row, column);
+        self.cells[idx].toggle();
     }
 }
 

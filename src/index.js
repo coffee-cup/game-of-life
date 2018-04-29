@@ -9,6 +9,11 @@ const ALIVE_COLOUR = '#000000';
 const DEAD = 0;
 const ALIVE = 1;
 
+// Buttons
+const playPauseButton = document.getElementById('play-pause');
+const clearButton = document.getElementById('clear');
+const randomButton = document.getElementById('random');
+
 // Construct the universe, and get its width and height.
 const canvas = document.getElementById('game-of-life-canvas');
 const container = document.getElementsByClassName('canvas-container')[0];
@@ -81,13 +86,68 @@ const drawCells = () => {
   ctx.stroke();
 };
 
+canvas.addEventListener('click', event => {
+  const boundingRect = canvas.getBoundingClientRect();
+
+  const scaleX = canvas.width / boundingRect.width;
+  const scaleY = canvas.height / boundingRect.height;
+
+  const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
+  const canvasTop = (event.clientY - boundingRect.top) * scaleY;
+
+  const row = Math.min(Math.floor(canvasTop / (cellSize + 1)), height - 1);
+  const col = Math.min(Math.floor(canvasLeft / (cellSize + 1)), width - 1);
+
+  universe.toggle_cell(row, col);
+
+  drawCells();
+  drawGrid();
+});
+
+let animationId = null;
+
 const renderLoop = () => {
   universe.tick();
 
   drawGrid();
   drawCells();
 
-  requestAnimationFrame(renderLoop);
+  animationId = requestAnimationFrame(renderLoop);
 };
 
-requestAnimationFrame(renderLoop);
+const isPaused = () => animationId === null;
+
+const play = () => {
+  playPauseButton.textContent = 'pause';
+  renderLoop();
+};
+
+const pause = () => {
+  playPauseButton.textContent = 'play';
+  cancelAnimationFrame(animationId);
+  animationId = null;
+};
+
+playPauseButton.addEventListener('click', () => {
+  if (isPaused()) {
+    play();
+  } else {
+    pause();
+  }
+});
+
+clearButton.addEventListener('click', () => {
+  universe.clear();
+
+  drawCells();
+  drawGrid();
+});
+
+randomButton.addEventListener('click', () => {
+  universe.randomize();
+
+  drawCells();
+  drawGrid();
+});
+
+play();
