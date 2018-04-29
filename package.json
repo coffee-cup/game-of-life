@@ -7,6 +7,7 @@
   "scripts": {
     "serve":
       "cross-env NODE_ENV=development webpack-dev-server --mode=development --hot --inline --progress",
+    "build": "yarn run build-release && cross-env NODE_ENV=production webpack --mode=production -p --progress",
     "build-debug": "yarn run compile-debug && yarn run wasm-debug",
     "build-release": "yarn run compile-release && yarn run wasm-release",
     "compile-debug": "cargo +nightly build --target wasm32-unknown-unknown",
@@ -16,7 +17,12 @@
       "wasm-bindgen target/wasm32-unknown-unknown/debug/game_of_life.wasm --out-dir .",
     "wasm-release":
       "wasm-bindgen target/wasm32-unknown-unknown/release/game_of_life.wasm --out-dir .",
+    "heroku-postbuild": "yarn run ",
     "test": "echo \"Not implemented\""
+  },
+  "engines": {
+    "node": ">= 9.11.1",
+    "npm" : ">= 5.6.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
